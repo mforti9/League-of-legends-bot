@@ -15,25 +15,24 @@ def telegram_bot_sendtext(bot_message):
 
     return response.json()
 
-def champ_select():
-    champSelect = pyautogui.locateCenterOnScreen('champSelect.png', confidence=0.7)
-    alreadyPlayed = True
-    while alreadyPlayed == True:
+""" def champ_select():
+    while True:
+        champSelect = pyautogui.locateCenterOnScreen('champSelect.png', confidence=0.7)
         if champSelect:
             telegram_bot_sendtext(f'In Champ Select! {datetime.now()}') 
-            alreadyPlayed = False
+            print("match_found")
             break
         else:
             pass
             time.sleep(3)
-            print("test")
             print(datetime.now())
-
+ """
 
 while True:
     # locate trigger on screen
     accept = pyautogui.locateCenterOnScreen('accept.png', confidence=0.7)
     loading = pyautogui.locateCenterOnScreen('loading.png', confidence=0.7)
+    champSelect = pyautogui.locateCenterOnScreen('champSelect.png', confidence=0.7)
     if accept:
         pyautogui.moveTo(accept)
         # click multiple times to ensure clicked
@@ -46,13 +45,13 @@ while True:
 
         telegram_bot_sendtext(f'Game is ready! {datetime.now()}')
 
-        champ_select()
+        #champ_select()
 
         time.sleep(5)
 
         
     # elif champSelect:
-    #     telegram_bot_sendtext(f'In Champ Select! {datetime.now()}') 
+        # telegram_bot_sendtext(f'In Champ Select! {datetime.now()}') 
         
     elif loading:
         telegram_bot_sendtext(f'Game Loading! {datetime.now()}')
@@ -62,4 +61,5 @@ while True:
         pass
         time.sleep(3)
         # print(datetime.now())
-
+ 
+# champ_select()
