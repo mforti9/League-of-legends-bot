@@ -50,8 +50,8 @@ while True:
         time.sleep(5)
 
         
-    # elif champSelect:
-        # telegram_bot_sendtext(f'In Champ Select! {datetime.now()}') 
+    elif champSelect:
+        telegram_bot_sendtext(f'In Champ Select! {datetime.now()}') 
         
     elif loading:
         telegram_bot_sendtext(f'Game Loading! {datetime.now()}')
@@ -60,6 +60,6 @@ while True:
     else:
         pass
         time.sleep(3)
-        # print(datetime.now())
+        print(datetime.now())
  
 # champ_select()
