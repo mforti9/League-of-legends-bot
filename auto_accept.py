@@ -16,16 +16,31 @@ def telegram_bot_sendtext(bot_message):
     return response.json()
 
 def champ_select():
+    time.sleep(5)
     while True:
         champSelect = pyautogui.locateCenterOnScreen('champSelect.png', confidence=0.7)
-        if champSelect:
-            telegram_bot_sendtext(f'In Champ Select! {datetime.now()}') 
-            print("Match Found")
+        accept = pyautogui.locateCenterOnScreen('accept.png', confidence=0.7)
+        loading = pyautogui.locateCenterOnScreen('loading.png', confidence=0.7)
+        dodged = pyautogui.locateCenterOnScreen('inQueue.png', confidence=0.7)
+        # if champSelect:
+        #     telegram_bot_sendtext(f'In Champ Select! {datetime.now()}') 
+        #     print("Match Found")
+        if dodged:
+            telegram_bot_sendtext(f'Someone Dodged! {datetime.now()}') 
+            print('someone dodged!')
             break
+        elif accept:
+            break
+        elif loading:
+            telegram_bot_sendtext(f'Game Loading! {datetime.now()}')
+            quit()
         else:
             pass
-            time.sleep(3)
+            time.sleep(3) 
+            print("debug: inner function")
             print(datetime.now())
+
+
  
 
 while True:
@@ -46,20 +61,15 @@ while True:
         telegram_bot_sendtext(f'Game is ready! {datetime.now()}')
 
         champ_select()
-
-        time.sleep(5)
-
-        
-    # elif champSelect:
-    #     telegram_bot_sendtext(f'In Champ Select! {datetime.now()}') 
         
     elif loading:
         telegram_bot_sendtext(f'Game Loading! {datetime.now()}')
-        break
+        quit()
 
     else:
         pass
         time.sleep(3)
+        print("debug: outer function")
         print(datetime.now())
  
 
