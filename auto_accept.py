@@ -40,7 +40,28 @@ def champ_select():
             print("debug: inner function")
             print(datetime.now())
 
-
+def role():
+    #adcarry = pyautogui.locateCenterOnScreen('images/adcarry.png', confidence=0.7)
+    jungle = pyautogui.locateCenterOnScreen('images/jungle.png', confidence=0.7)
+    #mid = pyautogui.locateCenterOnScreen('mid.png', confidence=0.7)
+    #supp = pyautogui.locateCenterOnScreen('supp.png', confidence=0.7)
+    #top = pyautogui.locateCenterOnScreen('top.png', confidence=0.7)
+    while True:
+        if jungle:
+            return "jungle"
+        # elif adcarry:
+        #     return "AD"
+        # elif mid:
+        #     return "Mid"
+        # elif supp:
+        #     return "Supp"
+        # elif top:
+        #     return "Top"
+        else:
+            return "Null"
+            
+pyautogui.moveTo(1411, 444)
+exec('telegramListener.py')
  
 
 while True:
@@ -59,7 +80,7 @@ while True:
         print(f'Game Accepted. {datetime.now()}')
 
         telegram_bot_sendtext(f'Game is ready! {datetime.now()}')
-
+        #call champ_select function which handles arguments during champ select and exits if someone dodges
         champ_select()
         
     elif loading:
