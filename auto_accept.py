@@ -1,8 +1,6 @@
 import pyautogui
-import smtplib
 from datetime import datetime
 import time
-import schedule
 import requests
 from telegramListener import listener 
    
@@ -19,15 +17,14 @@ def telegram_bot_sendtext(bot_message):
 
 def champ_select():
     time.sleep(5)
+    
     while True:
-        #champSelect = pyautogui.locateCenterOnScreen('champSelect.png', confidence=0.7)
+       
         accept = pyautogui.locateCenterOnScreen('accept.png', confidence=0.7)
         yourTurn = pyautogui.locateCenterOnScreen('yourTurn.png', confidence=0.7)
         loading = pyautogui.locateCenterOnScreen('loading.png', confidence=0.7)
         dodged = pyautogui.locateCenterOnScreen('inQueue.png', confidence=0.7)
-        # if champSelect:
-        #     telegram_bot_sendtext(f'In Champ Select! {datetime.now()}') 
-        #     print("Match Found")
+
         if yourTurn:
             role()
         elif dodged:
@@ -42,7 +39,7 @@ def champ_select():
         else:
             pass
             time.sleep(3) 
-            print("debug: inner function")
+            print("debug: champ select function")
             print(datetime.now())
 
 def role():
@@ -79,7 +76,7 @@ if __name__ == "__main__":
         # locate trigger on screen
         accept = pyautogui.locateCenterOnScreen('accept.png', confidence=0.7)
         loading = pyautogui.locateCenterOnScreen('loading.png', confidence=0.7)
-        #champSelect = pyautogui.locateCenterOnScreen('champSelect.png', confidence=0.7)
+      
         if accept:
             pyautogui.moveTo(accept)
             # click multiple times to ensure clicked
@@ -101,5 +98,5 @@ if __name__ == "__main__":
         else:
             pass
             time.sleep(3)
-            print("debug: outer function")
+            print("debug: main function")
             print(datetime.now())
