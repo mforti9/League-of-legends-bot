@@ -4,6 +4,8 @@ from datetime import datetime
 import time
 import schedule
 import requests
+from telegramListener import listener 
+   
 
 def telegram_bot_sendtext(bot_message):
     
@@ -18,19 +20,22 @@ def telegram_bot_sendtext(bot_message):
 def champ_select():
     time.sleep(5)
     while True:
-        champSelect = pyautogui.locateCenterOnScreen('champSelect.png', confidence=0.7)
+        #champSelect = pyautogui.locateCenterOnScreen('champSelect.png', confidence=0.7)
         accept = pyautogui.locateCenterOnScreen('accept.png', confidence=0.7)
+        yourTurn = pyautogui.locateCenterOnScreen('yourTurn.png', confidence=0.7)
         loading = pyautogui.locateCenterOnScreen('loading.png', confidence=0.7)
         dodged = pyautogui.locateCenterOnScreen('inQueue.png', confidence=0.7)
         # if champSelect:
         #     telegram_bot_sendtext(f'In Champ Select! {datetime.now()}') 
         #     print("Match Found")
-        if dodged:
+        if yourTurn:
+            role()
+        elif dodged:
             telegram_bot_sendtext(f'Someone Dodged! {datetime.now()}') 
             print('someone dodged!')
-            break
+            return
         elif accept:
-            break
+            return
         elif loading:
             telegram_bot_sendtext(f'Game Loading! {datetime.now()}')
             quit()
@@ -46,9 +51,12 @@ def role():
     #mid = pyautogui.locateCenterOnScreen('mid.png', confidence=0.7)
     #supp = pyautogui.locateCenterOnScreen('supp.png', confidence=0.7)
     #top = pyautogui.locateCenterOnScreen('top.png', confidence=0.7)
+    accept = pyautogui.locateCenterOnScreen('accept.png', confidence=0.7)
     while True:
         if jungle:
-            return "jungle"
+            print('You got Jungle!')
+            listener()
+            return
         # elif adcarry:
         #     return "AD"
         # elif mid:
@@ -57,40 +65,41 @@ def role():
         #     return "Supp"
         # elif top:
         #     return "Top"
+        elif accept:
+            #if someone dodges, should return back to original while loop
+            return
         else:
-            return "Null"
+            time.sleep(3)
+            print("checking role...")
+    #exec('telegramListener.py')
             
-pyautogui.moveTo(1411, 444)
-exec('telegramListener.py')
- 
 
-while True:
-    # locate trigger on screen
-    accept = pyautogui.locateCenterOnScreen('accept.png', confidence=0.7)
-    loading = pyautogui.locateCenterOnScreen('loading.png', confidence=0.7)
-    champSelect = pyautogui.locateCenterOnScreen('champSelect.png', confidence=0.7)
-    if accept:
-        pyautogui.moveTo(accept)
-        # click multiple times to ensure clicked
-        pyautogui.click(accept)
-        pyautogui.click(accept)
-        pyautogui.click(accept)
-        pyautogui.click()
+if __name__ == "__main__":
+    while True:
+        # locate trigger on screen
+        accept = pyautogui.locateCenterOnScreen('accept.png', confidence=0.7)
+        loading = pyautogui.locateCenterOnScreen('loading.png', confidence=0.7)
+        #champSelect = pyautogui.locateCenterOnScreen('champSelect.png', confidence=0.7)
+        if accept:
+            pyautogui.moveTo(accept)
+            # click multiple times to ensure clicked
+            pyautogui.click(accept)
+            pyautogui.click(accept)
+            pyautogui.click(accept)
+            pyautogui.click()
 
-        print(f'Game Accepted. {datetime.now()}')
+            print(f'Game Accepted. {datetime.now()}')
 
-        telegram_bot_sendtext(f'Game is ready! {datetime.now()}')
-        #call champ_select function which handles arguments during champ select and exits if someone dodges
-        champ_select()
-        
-    elif loading:
-        telegram_bot_sendtext(f'Game Loading! {datetime.now()}')
-        quit()
+            telegram_bot_sendtext(f'Game is ready! {datetime.now()}')
+            #call champ_select function which handles arguments during champ select and exits if someone dodges
+            champ_select()
+            
+        elif loading:
+            telegram_bot_sendtext(f'Game Loading! {datetime.now()}')
+            quit()
 
-    else:
-        pass
-        time.sleep(3)
-        print("debug: outer function")
-        print(datetime.now())
- 
-
+        else:
+            pass
+            time.sleep(3)
+            print("debug: outer function")
+            print(datetime.now())
